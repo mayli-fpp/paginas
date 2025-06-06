@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mi Autobiografía</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap');
+
+    /* Root variables */
+    :root {
+      --max-width: 1200px;
+      --color-bg: #ffffff;
+      --color-primary: #7b2ff7;
+      --color-accent: #ec4899;
+      --color-text: #6b7280;
+      --border-radius: 0.75rem;
+      --shadow-light: rgba(0, 0, 0, 0.05);
+      --transition-speed: 0.3s;
+      --font-sans: 'Poppins', sans-serif;
+      --font-heading: 'Poppins', sans-serif;
+      --font-size-base: 18px;
+    }
+
+    /* Reset */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      font-family: var(--font-sans);
+      font-size: var(--font-size-base);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: var(--color-accent);
+      text-decoration: none;
+      transition: color var(--transition-speed);
+    }
+    a:hover, a:focus {
+      color: var(--color-primary);
+      outline: none;
+      text-decoration: underline;
+    }
+
+    /* Container */
+    .container {
+      max-width: var(--max-width);
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0 1.5rem;
+      width: 100%;
+    }
+
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: var(--color-bg);
+      border-bottom: 1px solid #eee;
+      box-shadow: 0 1px 6px var(--shadow-light);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      user-select: none;
+      transition: box-shadow var(--transition-speed);
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    header.scrolled {
+      box-shadow: 0 4px 10px var(--shadow-light);
+    }
+
+    header h1 {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      color: var(--color-primary);
+      margin: 0;
+      user-select: none;
+      flex: 1 1 auto;
+      min-width: 180px;
+    }
+
+    nav {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      flex: 1 1 auto;
+      min-width: 200px;
+    }
+    nav a {
+      font-weight: 600;
+      font-size: clamp(0.9rem, 1.5vw, 1rem);
+      color: var(--color-text);
+      padding: 0.5rem 0.75rem;
+      border-radius: var(--border-radius);
+      transition: background-color var(--transition-speed), color var(--transition-speed);
+      user-select: none;
+      white-space: nowrap;
+      text-align: center;
+      display: inline-block;
+      min-width: 72px;
+    }
+    nav a:hover, nav a:focus {
+      background-color: var(--color-accent);
+      color: #fff;
+      outline: none;
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
+    }
+    nav a.active {
+      background-color: var(--color-accent);
+      color: #fff;
+      pointer-events: none;
+      box-shadow: 0 6px 20px rgba(236, 72, 153, 0.5);
+    }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: clamp(4rem, 8vw, 6rem) 1.5rem clamp(2.5rem, 5vw, 4rem);
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      user-select: none;
+    }
+    .hero h2 {
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: clamp(2.5rem, 6vw, 3.5rem);
+      color: var(--color-primary);
+      margin: 0 0 1rem;
+      line-height: 1.1;
+    }
+    .hero p {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: var(--color-text);
+      margin: 0 0 2.5rem;
+      font-weight: 400;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero .btn-primary {
+      background-color: #000000;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      padding: 1rem 3rem;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      border: none;
+      transition: background-color var(--transition-speed), transform var(--transition-speed);
+      display: inline-block;
+      text-decoration: none;
+      user-select: none;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+      min-width: 150px;
+    }
+    .hero .btn-primary:hover, 
+    .hero .btn-primary:focus {
+      background-color: var(--color-accent);
+      outline: none;
+      transform: scale(1.05);
+      box-shadow: 0 8px 25px rgba(236, 72, 153, 0.4);
+    }
+
+    /* Main Sections */
+    main {
+      max-width: var(--max-width);
+      margin: 0 auto 4rem;
+      padding: 0 1.5rem;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+    }
+    section {
+      background: #fff;
+      border-radius: var(--border-radius);
+      box-shadow: 0 8px 20px var(--shadow-light);
+      padding: clamp(1.5rem, 3vw, 3rem);
+      margin-bottom: 0;
+      transition: box-shadow var(--transition-speed), transform var(--transition-speed);
+      opacity: 0;
+      transform: translateX(0);
+    }
+    section.visible {
+      opacity: 1;
+      transform: translateX(0);
+      transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    section:hover, section:focus-within {
+      box-shadow: 0 12px 30px rgba(0,0,0,0.07);
+      transform: translateY(-4px);
+      outline: none;
+    }
+    section h3 {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: clamp(1.75rem, 4vw, 2.25rem);
+      margin: 0 0 1rem;
+      color: var(--color-primary);
+      user-select: text;
+      position: relative;
+    }
+    section h3::after {
+      content: "";
+      position: absolute;
+      bottom: -14px;
+      left: 0;
+      width: 60px;
+      height: 6px;
+      background: var(--color-accent);
+      border-radius: 8px;
+      user-select: none;
+      transition: background-color 0.3s ease;
+    }
+    section p {
+      font-size: clamp(1rem, 2vw, 1.1rem);
+      color: var(--color-text);
+      line-height: 1.7;
+      margin-bottom: 1.2rem;
+      user-select: text;
+    }
+
+    /* Slide-in animations */
+    @keyframes slideInFromLeft {
+      0% {
+        opacity: 0;
+        transform: translateX(-40px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    @keyframes slideInFromRight {
+      0% {
+        opacity: 0;
+        transform: translateX(40px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* Classes to trigger animations */
+    section.slide-in-left.visible {
+      animation: slideInFromLeft 0.6s ease forwards;
+    }
+    section.slide-in-right.visible {
+      animation: slideInFromRight 0.6s ease forwards;
+    }
+
+    /* About content flex */
+    .about-content {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3rem;
+      align-items: center;
+      justify-content: center;
+    }
+    .about-photo {
+      flex: 0 0 280px;
+      height: 280px;
+      border-radius: 50%;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      cursor: pointer;
+      transition: box-shadow 0.4s ease;
+      user-select: none;
+      background: #f9f9f9;
+    }
+    .about-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      display: block;
+      transition: transform 0.6s cubic-bezier(0.22,1,0.36,1);
+      will-change: transform;
+      user-select: none;
+    }
+    .about-photo:hover,
+    .about-photo:focus {
+      box-shadow: 0 14px 45px rgba(236, 72, 153, 0.3);
+      outline: none;
+    }
+    .about-photo:hover img,
+    .about-photo:focus img {
+      transform: scale(1.07) rotate(3deg);
+      outline: none;
+    }
+    .about-text {
+      flex: 1 1 400px;
+      font-size: clamp(1rem, 2vw, 1.15rem);
+      color: var(--color-text);
+      user-select: text;
+      min-width: 280px;
+      max-width: 600px;
+    }
+
+    /* Lists for skills, experience, education */
+    ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+    .skills-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+    .skills-list li {
+      background: var(--color-accent);
+      color: #fff;
+      padding: 0.6rem 1.5rem;
+      border-radius: 9999px;
+      font-weight: 700;
+      font-size: clamp(0.9rem, 1.5vw, 1rem);
+      box-shadow: 0 4px 12px rgba(236,72,153,0.3);
+      user-select: none;
+      cursor: default;
+      white-space: nowrap;
+      transition: background-color 0.3s ease;
+    }
+    .skills-list li:hover {
+      background: var(--color-primary);
+      box-shadow: 0 6px 20px rgba(123,47,247,0.5);
+    }
+
+    .experience-list li,
+    .education-list li {
+      margin-bottom: 2.5rem;
+      padding: 2rem 2rem;
+      background: #fafafa;
+      border-radius: var(--border-radius);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.03);
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+      cursor: default;
+      user-select: none;
+    }
+    .experience-list li:hover,
+    .education-list li:hover {
+      box-shadow: 0 10px 30px rgba(123,47,247,0.15);
+      transform: translateY(-5px);
+    }
+    .experience-list li h4,
+    .education-list li h4 {
+      font-weight: 700;
+      font-size: clamp(1.2rem, 3vw, 1.4rem);
+      margin: 0 0 0.5rem;
+      color: var(--color-primary);
+    }
+    .experience-list li span,
+    .education-list li span {
+      font-style: italic;
+      color: var(--color-accent);
+      font-size: 1rem;
+      display: block;
+      margin-bottom: 0.7rem;
+    }
+    .experience-list li p,
+    .education-list li p {
+      font-size: clamp(1rem, 2vw, 1.1rem);
+      color: var(--color-text);
+      margin: 0;
+    }
+
+    /* Contact Section */
+    #contact p {
+      font-size: clamp(1rem, 2vw, 1.1rem);
+      color: var(--color-text);
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
+      user-select: none;
+    }
+    #contact a {
+      color: var(--color-accent);
+      font-weight: 700;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    #contact a:hover,
+    #contact a:focus {
+      color: var(--color-primary);
+      outline: none;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--color-text);
+      font-size: 0.9rem;
+      user-select: none;
+      border-top: 1px solid #eee;
+      margin-top: 4rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .hero h2 {
+        font-size: 2.75rem;
+      }
+      .about-content {
+        flex-direction: column;
+        gap: 2rem;
+      }
+      .about-photo {
+        width: 240px;
+        height: 240px;
+      }
+      section {
+        padding: 2rem 1.5rem;
+      }
+    }
+    @media (max-width: 500px) {
+      nav {
+        gap: 1rem;
+        justify-content: center;
+      }
+      nav a {
+        padding: 0.4rem 0.6rem;
+        font-size: 0.9rem;
+      }
+      .hero .btn-primary {
+        width: 100%;
+        padding: 1rem 1rem;
+        font-size: 1.1rem;
+      }
+      .about-photo {
+        width: 180px;
+        height: 180px;
+      }
+      .about-text {
+        max-width: 100%;
+        font-size: 1rem;
+      }
+      section h3 {
+        font-size: 1.75rem;
+      }
+      section p {
+        font-size: 1rem;
+      }
+    }
+    @media (max-width: 320px) {
+      .hero h2 {
+        font-size: 1.8rem;
+      }
+      .hero p {
+        font-size: 0.9rem;
+      }
+      .hero .btn-primary {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header role="banner">
+    <h1>Mayli Pirir</h1>
+    <nav aria-label="Navegación principal">
+      <a href="pagina1.html" class="active" aria-current="page">Sobre mí</a>
+      <a href="loaprendido.html">Lo aprendido en la clase</a>
+      <a href="criticaconstructiva.html">Crítica constructiva</a>
+    </nav>
+  </header>
+
+
+  <main class="container" role="main">
+    <section id="about" tabindex="0" aria-label="Sección sobre mí" class="slide-in-left">
+      <h3>Sobre mí</h3>
+      <div class="about-content">
+        <div class="about-photo" tabindex="0">
+          <img src="https://via.placeholder.com/280x280.png?text=Tu+Foto" alt="Foto de Tu Nombre Apellido" loading="lazy" decoding="async" />
+        </div>
+        <div class="about-text">
+          <p>Mi nombre es Mayli Fabiola Pirir, tengo 19 años naci el 24 de julio del 2005</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" tabindex="0" aria-label="Sección habilidades" class="slide-in-right">
+      <h3>Habilidades</h3>
+      <ul class="skills-list" aria-describedby="skills-desc">
+        <li>HTML5, CSS3, JavaScript</li>
+        <li>Frameworks: React</li>
+        <li>Backend: Node.js</li>
+        <li>Diseño responsivo y accesibilidad</li>
+        <li>Metodologías ágiles</li>
+      </ul>
+    </section>
+
+    <section id="experience" tabindex="0" aria-label="Sección experiencia laboral" class="slide-in-left">
+      <h3>Experiencia</h3>
+      <ul class="experience-list" aria-describedby="experience-desc">
+        
+        <li>
+          <h4>Practicante en Desarrollo Web</h4>
+          <span> 2024 - 2025</span>
+          <p>Responsable del desarrollo frontend con énfasis en metodologías ágiles y calidad del código mediante pruebas unitarias.</p>
+        </li>
+      </ul>
+    </section>
+
+    <section id="education" tabindex="0" aria-label="Sección educación" class="slide-in-right">
+      <h3>Educación</h3>
+      <ul class="education-list" aria-describedby="education-desc">
+        <li>
+          <h4>Bachillerato en computacion</h4>
+          <span>Colegio Mariano Totus Tuus - 2022 - 2023</span>
+          <p>Diplomado en desarrollo de software, arquitecturas web y tecnologías emergentes.</p>
+          <p>Diplomado en informática y Programación.</p>
+        </li>
+      </ul>
+    </section>
+
+    <section id="contact" tabindex="0" aria-label="Sección contacto" class="slide-in-left">
+      <h3>Contacto</h3>
+      <p>
+        Email: <a href="mailto:maylipirir2005@gmail.com">maylipirir2005@gmail.com</a><br />
+        GitHub: <a href="https://github.com/mayli-fpp" target="_blank" rel="noopener noreferrer">github.com/mayli-fpp</a>
+      </p>
+    </section>
+  </main>
+
+  <footer role="contentinfo" aria-label="Pie de página">
+    &copy; 2025 Mayli Pirir. Todos los derechos reservados.
+  </footer>
+
+  <script>
+    // Sticky header shadow toggle on scroll
+    document.addEventListener('DOMContentLoaded', () => {
+      const header = document.querySelector('header');
+      const toggleHeaderShadow = () => {
+        if (window.scrollY > 20) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
+        }
+      };
+      toggleHeaderShadow();
+      window.addEventListener('scroll', toggleHeaderShadow);
+
+      // IntersectionObserver for card reveal animations with alternating slide directions
+      const sections = document.querySelectorAll('main section');
+      const options = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.2
+      };
+
+      const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target); // Animate once
+          }
+        });
+      }, options);
+
+      sections.forEach((section, index) => {
+        // Add alternating slide classes before observing
+        if (index % 2 === 0) {
+          section.classList.add('slide-in-left');
+        } else {
+          section.classList.add('slide-in-right');
+        }
+        observer.observe(section);
+      });
+    });
+  </script>
+</body>
+</html>

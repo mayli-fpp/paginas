@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lo aprendido en la clase</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap');
+
+    :root {
+      --max-width: 1200px;
+      --color-bg: #ffffff;
+      --color-primary: #7b2ff7;
+      --color-accent: #ec4899;
+      --color-text: #6b7280;
+      --border-radius: 0.75rem;
+      --shadow-light: rgba(0, 0, 0, 0.05);
+      --transition-speed: 0.3s;
+      --font-sans: 'Poppins', sans-serif;
+      --font-heading: 'Poppins', sans-serif;
+      --font-size-base: 18px;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      font-family: var(--font-sans);
+      font-size: var(--font-size-base);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: var(--color-accent);
+      text-decoration: none;
+      transition: color var(--transition-speed);
+    }
+    a:hover, a:focus {
+      color: var(--color-primary);
+      outline: none;
+      text-decoration: underline;
+    }
+
+    .container {
+      max-width: var(--max-width);
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0 1.5rem;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+      padding-top: 4rem;
+      padding-bottom: 4rem;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: var(--color-bg);
+      border-bottom: 1px solid #eee;
+      box-shadow: 0 1px 6px var(--shadow-light);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      user-select: none;
+      transition: box-shadow var(--transition-speed);
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    header.scrolled {
+      box-shadow: 0 4px 10px var(--shadow-light);
+    }
+
+    header h1 {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      color: var(--color-primary);
+      margin: 0;
+      user-select: none;
+      flex: 1 1 auto;
+      min-width: 180px;
+    }
+
+    nav {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      flex: 1 1 auto;
+      min-width: 200px;
+    }
+    nav a {
+      font-weight: 600;
+      font-size: clamp(0.9rem, 1.5vw, 1rem);
+      color: var(--color-text);
+      padding: 0.5rem 0.75rem;
+      border-radius: var(--border-radius);
+      transition: background-color var(--transition-speed), color var(--transition-speed);
+      user-select: none;
+      white-space: nowrap;
+      text-align: center;
+      display: inline-block;
+      min-width: 72px;
+    }
+    nav a:hover, nav a:focus {
+      background-color: var(--color-accent);
+      color: #fff;
+      outline: none;
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
+    }
+    nav a.active {
+      background-color: var(--color-accent);
+      color: #fff;
+      pointer-events: none;
+      box-shadow: 0 6px 20px rgba(236, 72, 153, 0.5);
+    }
+
+    main {
+      max-width: var(--max-width);
+      margin: 0 auto 4rem;
+      padding: 0 1.5rem;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+    }
+    section {
+      background: #fff;
+      border-radius: var(--border-radius);
+      box-shadow: 0 8px 20px var(--shadow-light);
+      padding: clamp(1.5rem, 3vw, 3rem);
+      margin-bottom: 0;
+      transition: box-shadow var(--transition-speed), transform var(--transition-speed);
+      opacity: 0;
+      transform: translateX(0);
+    }
+    section.visible {
+      opacity: 1;
+      transform: translateX(0);
+      transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    section:hover, section:focus-within {
+      box-shadow: 0 12px 30px rgba(0,0,0,0.07);
+      transform: translateY(-4px);
+      outline: none;
+    }
+    section h2 {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: clamp(2rem, 5vw, 3rem);
+      color: var(--color-primary);
+      margin: 0 0 1rem;
+      user-select: text;
+      position: relative;
+    }
+    section h2::after {
+      content: "";
+      position: absolute;
+      bottom: -14px;
+      left: 0;
+      width: 60px;
+      height: 6px;
+      background: var(--color-accent);
+      border-radius: 8px;
+      user-select: none;
+      transition: background-color 0.3s ease;
+    }
+    section p {
+      font-size: clamp(1rem, 2vw, 1.1rem);
+      color: var(--color-text);
+      line-height: 1.7;
+      margin-bottom: 1.2rem;
+      user-select: text;
+      white-space: pre-line;
+    }
+
+    @keyframes slideInFromLeft {
+      0% {
+        opacity: 0;
+        transform: translateX(-40px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    @keyframes slideInFromRight {
+      0% {
+        opacity: 0;
+        transform: translateX(40px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    section.slide-in-left.visible {
+      animation: slideInFromLeft 0.6s ease forwards;
+    }
+    section.slide-in-right.visible {
+      animation: slideInFromRight 0.6s ease forwards;
+    }
+
+    footer {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--color-text);
+      font-size: 0.9rem;
+      user-select: none;
+      border-top: 1px solid #eee;
+      margin-top: 4rem;
+    }
+
+    @media (max-width: 900px) {
+      section {
+        padding: 2rem 1.5rem;
+      }
+    }
+    @media (max-width: 500px) {
+      nav {
+        gap: 1rem;
+        justify-content: center;
+      }
+      nav a {
+        padding: 0.4rem 0.6rem;
+        font-size: 0.9rem;
+      }
+      section h2 {
+        font-size: 1.75rem;
+      }
+      section p {
+        font-size: 1rem;
+      }
+    }
+    @media (max-width: 320px) {
+      section h2 {
+        font-size: 1.5rem;
+      }
+      section p {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header role="banner">
+    <h1>Mayli Pirir</h1>
+    <nav aria-label="Navegación principal">
+      <a href="pagina1.html">Sobre mí</a>
+      <a href="loaprendido.html" class="active" aria-current="page">Lo aprendido en la clase</a>
+      <a href="criticaconstructiva.html">Crítica constructiva</a>
+    </nav>
+  </header>
+
+  <main class="container" role="main">
+    <section tabindex="0" aria-label="Contenido lo aprendido en la clase" class="slide-in-left">
+      <h2>Temas Vistos en el Semestre</h2>
+    </section>
+
+    <section tabindex="0" aria-label="Tema 1: Introducción a los sistemas de Computo" class="slide-in-right">
+      <h2>Tema 1: Introducción a los Sistemas de Computo</h2>
+      <p>En el tema de introducción a los sistemas de cómputo, aprendí los conceptos fundamentales que conforman el funcionamiento y la estructura de una computadora. Comprendí que un sistema de cómputo no solo se refiere al hardware (como el procesador, la memoria RAM, el disco duro, etc.), sino también al software, que incluye los programas y sistemas operativos que permiten que el hardware funcione de manera eficiente.
+</p>
+    </section>
+
+    <section tabindex="0" aria-label="Tema 2: Buses de datos" class="slide-in-left">
+      <h2>Tema 2: Buses de datos</h2>
+      <p>Este tema me ayudó a entender mejor cómo circula la información dentro de una computadora y por qué la arquitectura interna del sistema es tan importante para su rendimiento. Los buses de datos son como “autopistas internas” que permiten el flujo ordenado y rápido de datos en el sistema.</p>
+    </section>
+
+    <section tabindex="0" aria-label="Tema 3: Arquitectura de una computadora" class="slide-in-left">
+      <h2>Tema 3: Arquitectura de una computadora</h2>
+      <p>Este tema me dio una visión más clara de cómo está construida una computadora por dentro y cómo cada parte cumple una función específica que permite que todo el sistema funcione de forma integrada y eficiente.</p>
+    </section>
+
+    <section tabindex="0" aria-label="Tema 3: Sistemas numéricos" class="slide-in-right">
+      <h2>Tema 4 : Sistemas numéricos</h2>
+      <p>Este tema me ayudó a entender cómo las computadoras manejan y procesan la información a nivel más básico, y por qué es tan importante conocer estos sistemas numéricos para cualquier área relacionada con la computación.</p>
+    </section>
+
+    <section tabindex="0" aria-label="Tema 5: Bases de datos" class="slide-in-left">
+      <h2>Tema 5: Bases de datos</h2>
+      <p>este tema me ayudó a entender cómo se estructura y maneja la información digital, y me dio las bases para seguir aprendiendo sobre diseño y gestión de bases de datos en proyectos reales.</p>
+    </section>
+
+    <section tabindex="0" aria-label="Tema 6: Normalización de bases de datos" class="slide-in-right">
+      <h2>Tema 6: Normalización de bases de datos</h2>
+      <p>este tema me ayudó a comprender cómo diseñar bases de datos más eficientes, organizadas y libres de errores comunes, lo cual es fundamental para cualquier aplicación o sistema que maneje datos.</p>
+    </section>
+
+    <section tabindex="0" aria-label="Tema 7: Paginas Web" class="slide-in-left">
+      <h2>Tema 7: Paginas Web</h2>
+      <p>Este tema me permitió conocer mas de las bases del desarrollo web y cómo se crean páginas funcionales y visualmente atractivas. Ahora tengo una mejor comprensión de cómo están hechas las páginas que usamos todos los días y cómo podría mejorar las mías.</p>
+    </section>
+
+    <section tabindex="0" aria-label="Tema 8: Algoritmos" class="slide-in-left">
+      <h2>Tema 8: Algoritmos</h2>
+      <p>Este tema me enseñó a pensar de manera lógica y estructurada para resolver problemas, lo cual es una habilidad clave no solo en la programación, sino también en muchas otras áreas.</p>
+    </section>
+  </main>
+
+  <footer role="contentinfo" aria-label="Pie de página">
+    &copy; 2025 Mayli Pirir. Todos los derechos reservados.
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const header = document.querySelector('header');
+      const toggleHeaderShadow = () => {
+        if (window.scrollY > 20) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
+        }
+      };
+      toggleHeaderShadow();
+      window.addEventListener('scroll', toggleHeaderShadow);
+
+      const sections = document.querySelectorAll('main section');
+      const options = { root: null, rootMargin: '0px', threshold: 0.2 };
+      const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, options);
+
+      sections.forEach((section, i) => {
+        if (i % 2 === 0) {
+          section.classList.add('slide-in-left');
+        } else {
+          section.classList.add('slide-in-right');
+        }
+        observer.observe(section);
+      });
+    });
+  </script>
+</body>
+</html>

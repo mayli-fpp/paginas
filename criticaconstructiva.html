@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Crítica constructiva</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap');
+
+    :root {
+      --max-width: 1200px;
+      --color-bg: #ffffff;
+      --color-primary: #7b2ff7;
+      --color-accent: #ec4899;
+      --color-text: #6b7280;
+      --border-radius: 0.75rem;
+      --shadow-light: rgba(0, 0, 0, 0.05);
+      --transition-speed: 0.3s;
+      --font-sans: 'Poppins', sans-serif;
+      --font-heading: 'Poppins', sans-serif;
+      --font-size-base: 18px;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      font-family: var(--font-sans);
+      font-size: var(--font-size-base);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: var(--color-accent);
+      text-decoration: none;
+      transition: color var(--transition-speed);
+    }
+    a:hover, a:focus {
+      color: var(--color-primary);
+      outline: none;
+      text-decoration: underline;
+    }
+
+    .container {
+      max-width: var(--max-width);
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0 1.5rem;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+      padding-top: 4rem;
+      padding-bottom: 4rem;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: var(--color-bg);
+      border-bottom: 1px solid #eee;
+      box-shadow: 0 1px 6px var(--shadow-light);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      user-select: none;
+      transition: box-shadow var(--transition-speed);
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    header.scrolled {
+      box-shadow: 0 4px 10px var(--shadow-light);
+    }
+
+    header h1 {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      color: var(--color-primary);
+      margin: 0;
+      user-select: none;
+      flex: 1 1 auto;
+      min-width: 180px;
+    }
+
+    nav {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      flex: 1 1 auto;
+      min-width: 200px;
+    }
+    nav a {
+      font-weight: 600;
+      font-size: clamp(0.9rem, 1.5vw, 1rem);
+      color: var(--color-text);
+      padding: 0.5rem 0.75rem;
+      border-radius: var(--border-radius);
+      transition: background-color var(--transition-speed), color var(--transition-speed);
+      user-select: none;
+      white-space: nowrap;
+      text-align: center;
+      display: inline-block;
+      min-width: 72px;
+    }
+    nav a:hover, nav a:focus {
+      background-color: var(--color-accent);
+      color: #fff;
+      outline: none;
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
+    }
+    nav a.active {
+      background-color: var(--color-accent);
+      color: #fff;
+      pointer-events: none;
+      box-shadow: 0 6px 20px rgba(236, 72, 153, 0.5);
+    }
+
+    main {
+      max-width: var(--max-width);
+      margin: 0 auto 4rem;
+      padding: 0 1.5rem;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+    }
+    section {
+      background: #fff;
+      border-radius: var(--border-radius);
+      box-shadow: 0 8px 20px var(--shadow-light);
+      padding: clamp(1.5rem, 3vw, 3rem);
+      margin-bottom: 0;
+      transition: box-shadow var(--transition-speed), transform var(--transition-speed);
+      opacity: 0;
+      transform: translateX(0);
+    }
+    section.visible {
+      opacity: 1;
+      transform: translateX(0);
+      transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    section:hover, section:focus-within {
+      box-shadow: 0 12px 30px rgba(0,0,0,0.07);
+      transform: translateY(-4px);
+      outline: none;
+    }
+    section h2 {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: clamp(2rem, 5vw, 3rem);
+      color: var(--color-primary);
+      margin: 0 0 1rem;
+      user-select: text;
+      position: relative;
+    }
+    section h2::after {
+      content: "";
+      position: absolute;
+      bottom: -14px;
+      left: 0;
+      width: 60px;
+      height: 6px;
+      background: var(--color-accent);
+      border-radius: 8px;
+      user-select: none;
+      transition: background-color 0.3s ease;
+    }
+    section p {
+      font-size: clamp(1rem, 2vw, 1.1rem);
+      color: var(--color-text);
+      line-height: 1.7;
+      margin-bottom: 1.2rem;
+      user-select: text;
+    }
+
+    @keyframes slideInFromLeft {
+      0% {
+        opacity: 0;
+        transform: translateX(-40px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    @keyframes slideInFromRight {
+      0% {
+        opacity: 0;
+        transform: translateX(40px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    section.slide-in-left.visible {
+      animation: slideInFromLeft 0.6s ease forwards;
+    }
+    section.slide-in-right.visible {
+      animation: slideInFromRight 0.6s ease forwards;
+    }
+
+    footer {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--color-text);
+      font-size: 0.9rem;
+      user-select: none;
+      border-top: 1px solid #eee;
+      margin-top: 4rem;
+    }
+
+    @media (max-width: 900px) {
+      section {
+        padding: 2rem 1.5rem;
+      }
+    }
+    @media (max-width: 500px) {
+      nav {
+        gap: 1rem;
+        justify-content: center;
+      }
+      nav a {
+        padding: 0.4rem 0.6rem;
+        font-size: 0.9rem;
+      }
+      section h2 {
+        font-size: 1.75rem;
+      }
+      section p {
+        font-size: 1rem;
+      }
+    }
+    @media (max-width: 320px) {
+      section h2 {
+        font-size: 1.5rem;
+      }
+      section p {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header role="banner">
+    <h1>Mayli Pirir</h1>
+    <nav aria-label="Navegación principal">
+      <a href="pagina1.html">Sobre mí</a>
+      <a href="loaprendido.html">Lo aprendido en la clase</a>
+      <a href="criticaconstructiva.html" class="active" aria-current="page">Crítica constructiva</a>
+    </nav>
+  </header>
+
+  <main class="container" role="main">
+    <section tabindex="0" aria-label="Agradecimiento al Ingeniero Harold Cancinos" class="slide-in-left">
+      <h2>Ingeniero Harold Cancinos</h2>
+      <p>Me complace dirigirme a usted para expresarle mi más sincero agradecimiento por la dedicación, profesionalismo y pasión que demuestra en su labor docente. Su estilo de enseñanza es verdaderamente ejemplar: claro, dinámico y profundamente enfocado en el aprendizaje significativo. Usted no solo comunica el conocimiento de forma efectiva, sino que también consigue despertar el interés y la curiosidad de sus estudiantes, incluso en los temas más técnicos y complejos.
+</p>
+    </section>
+
+    <section tabindex="0" aria-label="Aspectos Positivos" class="slide-in-right">
+      <h2>Aspectos destacados de su enseñanza</h2>
+      <ul>
+        <li>Refleja auténtica pasión por la docencia.
+</li>
+        <li>Fomenta el pensamiento crítico y el análisis reflexivo.
+</li>
+        <li>Utiliza ejemplos prácticos y aplicables a la realidad profesional.
+</li>
+        <li>Explica de forma clara y accesible, sin perder el rigor técnico.
+</li>
+        <li>Hace que el aprendizaje sea ameno y motivador.
+</li>
+      </ul>
+    </section>
+
+
+    <section tabindex="0" aria-label="Evaluación Detallada" class="slide-in-right">
+      <h2>Evaluación Detallada</h2>
+      <p>Su forma de enseñar es clara, bien estructurada y adaptada a las necesidades del grupo. Posee un dominio sólido del contenido y lo transmite de manera didáctica, manteniendo el interés de los estudiantes durante toda la clase. Aunque podría integrarse un poco más de práctica aplicada, la calidad del contenido es alta y coherente.
+
+</p>
+    </section>
+
+    <section tabindex="0" aria-label="Valoración General" class="slide-in-left">
+      <h2>Valoración General</h2>
+      <p>5/5</p>
+      <p>A pesar de la complejidad técnica de los temas abordados, usted logra transformar cada clase en una experiencia enriquecedora. Gracias a su capacidad para explicar con claridad, el uso de ejemplos pertinentes y un lenguaje accesible, facilita el entendimiento de conceptos avanzados. Sin duda, su trabajo deja una huella positiva en quienes tenemos la oportunidad de aprender con usted.
+</p>
+    </section>
+  </main>
+
+  <footer role="contentinfo" aria-label="Pie de página">
+    &copy; 2025 Mayli Pirir. Todos los derechos reservados.
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const header = document.querySelector('header');
+      const toggleHeaderShadow = () => {
+        if (window.scrollY > 20) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
+        }
+      };
+      toggleHeaderShadow();
+      window.addEventListener('scroll', toggleHeaderShadow);
+
+      const sections = document.querySelectorAll('main section');
+      const options = { root: null, rootMargin: '0px', threshold: 0.2 };
+      const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, options);
+
+      sections.forEach((section, i) => {
+        if (i % 2 === 0) {
+          section.classList.add('slide-in-left');
+        } else {
+          section.classList.add('slide-in-right');
+        }
+        observer.observe(section);
+      });
+    });
+  </script>
+</body>
+</html>
