@@ -7,7 +7,6 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap');
 
-    /* Root variables */
     :root {
       --max-width: 1200px;
       --color-bg: #ffffff;
@@ -22,7 +21,6 @@
       --font-size-base: 18px;
     }
 
-    /* Reset */
     *, *::before, *::after {
       box-sizing: border-box;
     }
@@ -50,7 +48,6 @@
       text-decoration: underline;
     }
 
-    /* Container */
     .container {
       max-width: var(--max-width);
       margin-left: auto;
@@ -59,7 +56,6 @@
       width: 100%;
     }
 
-    /* Header */
     header {
       position: sticky;
       top: 0;
@@ -126,7 +122,6 @@
       box-shadow: 0 6px 20px rgba(236, 72, 153, 0.5);
     }
 
-    /* Hero */
     .hero {
       text-align: center;
       padding: clamp(4rem, 8vw, 6rem) 1.5rem clamp(2.5rem, 5vw, 4rem);
@@ -176,7 +171,6 @@
       box-shadow: 0 8px 25px rgba(236, 72, 153, 0.4);
     }
 
-    /* Main Sections */
     main {
       max-width: var(--max-width);
       margin: 0 auto 4rem;
@@ -235,7 +229,6 @@
       user-select: text;
     }
 
-    /* Slide-in animations */
     @keyframes slideInFromLeft {
       0% {
         opacity: 0;
@@ -257,7 +250,6 @@
       }
     }
 
-    /* Classes to trigger animations */
     section.slide-in-left.visible {
       animation: slideInFromLeft 0.6s ease forwards;
     }
@@ -265,7 +257,6 @@
       animation: slideInFromRight 0.6s ease forwards;
     }
 
-    /* About content flex */
     .about-content {
       display: flex;
       flex-wrap: wrap;
@@ -313,7 +304,6 @@
       max-width: 600px;
     }
 
-    /* Lists for skills, experience, education */
     ul {
       list-style: none;
       padding-left: 0;
@@ -381,7 +371,6 @@
       margin: 0;
     }
 
-    /* Contact Section */
     #contact p {
       font-size: clamp(1rem, 2vw, 1.1rem);
       color: var(--color-text);
@@ -404,7 +393,6 @@
       cursor: pointer;
     }
 
-    /* Footer */
     footer {
       text-align: center;
       padding: 3rem 1rem;
@@ -415,7 +403,6 @@
       margin-top: 4rem;
     }
 
-    /* Responsive */
     @media (max-width: 900px) {
       .hero h2 {
         font-size: 2.75rem;
@@ -494,7 +481,7 @@
         </div>
         <div class="about-text">
           <p>Mi nombre es Mayli Fabiola Pirir, tengo 19 años naci el 24 de julio del 2005, actualmente soy estudiante de Ingenieria en Sistemas, me considero una persona dedicada 
-          a lo que hace, me he esforzado bastante para lograr todas mis metas propuestas y trato de mejorar cada dia mas </p>
+          a lo que hace, me he esforzado bastante para lograr todas mis metas propuestas y trato de mejorar cada dia mas.</p>
         </div>
       </div>
     </section>
@@ -548,7 +535,6 @@
   </footer>
 
   <script>
-    // Sticky header shadow toggle on scroll
     document.addEventListener('DOMContentLoaded', () => {
       const header = document.querySelector('header');
       const toggleHeaderShadow = () => {
@@ -561,7 +547,6 @@
       toggleHeaderShadow();
       window.addEventListener('scroll', toggleHeaderShadow);
 
-      // IntersectionObserver for card reveal animations with alternating slide directions
       const sections = document.querySelectorAll('main section');
       const options = {
         root: null,
@@ -573,13 +558,12 @@
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             entry.target.classList.add('visible');
-            observer.unobserve(entry.target); // Animate once
+            observer.unobserve(entry.target); 
           }
         });
       }, options);
 
       sections.forEach((section, index) => {
-        // Add alternating slide classes before observing
         if (index % 2 === 0) {
           section.classList.add('slide-in-left');
         } else {
